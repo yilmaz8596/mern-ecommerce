@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
+import couponRoutes from "./routes/coupon.routes.js";
 import { connectDB } from "./lib/db.js";
 
 connectDB();
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/card", cartRoutes);
+app.use("/api/v1/coupon", couponRoutes);
 
 app.use((err, req, res, next) => {
   const errMessage = err.message || "Internal Server Error";
