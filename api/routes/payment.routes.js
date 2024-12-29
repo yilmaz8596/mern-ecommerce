@@ -7,8 +7,10 @@ import {
 
 const router = express.Router();
 
-router.route("/create-checkout-session").post(createCheckoutSession);
+router
+  .route("/create-checkout-session")
+  .post(authMiddleware, createCheckoutSession);
 
-router.route("/checkout-success").post(checkoutSuccess);
+router.route("/checkout-success").post(authMiddleware, checkoutSuccess);
 
 export default router;
