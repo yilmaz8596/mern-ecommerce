@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import couponRoutes from "./routes/coupon.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
 import { connectDB } from "./lib/db.js";
 
 connectDB();
@@ -21,6 +22,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/card", cartRoutes);
 app.use("/api/v1/coupon", couponRoutes);
+app.use("/api/v1/payment", paymentRoutes);
 
 app.use((err, req, res, next) => {
   const errMessage = err.message || "Internal Server Error";
