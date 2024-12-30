@@ -1,9 +1,10 @@
 import { useFormik } from "formik";
+import { useUserStore } from "../store/useUserStore";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { LogIn, Mail, Lock, ArrowRight, Loader } from "lucide-react";
-import { useUserStore } from "../store/useUserStore";
+import { signinSchema } from "../schemas/signinSchema";
 
 export default function Signin() {
   const { login, loading } = useUserStore();
@@ -15,6 +16,7 @@ export default function Signin() {
       email: "",
       password: "",
     },
+    validationSchema: signinSchema,
     onSubmit: async (values) => {
       const success = await login(values);
       if (success) {
