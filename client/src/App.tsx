@@ -1,11 +1,14 @@
+import { useUserStore } from "./store/useUserStore";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import AdminDashboard from "./pages/AdminDashboard";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 
 export default function App() {
+  const { user } = useUserStore();
   return (
     <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
@@ -20,6 +23,10 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/secret-dashboard"
+            element={user?.role === "admin" ? <AdminDashboard /> : <Home />}
+          />
         </Routes>
       </div>
     </div>

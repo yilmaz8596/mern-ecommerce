@@ -7,14 +7,7 @@ export const createProduct = async (req, res, next) => {
   try {
     const { name, description, price, category, countInStock, imageUrl } =
       req.body;
-    if (
-      !name ||
-      !description ||
-      !price ||
-      !category ||
-      !countInStock ||
-      !imageUrl
-    ) {
+    if (!name || !description || !price || !category) {
       return next(new createHttpError.BadRequest("Missing required fields"));
     }
     let cloudinaryResponse = null;

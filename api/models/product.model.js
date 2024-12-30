@@ -25,12 +25,11 @@ const productSchema = new mongoose.Schema(
     },
     countInStock: {
       type: Number,
-      required: [true, "Stock is required"],
       default: 0,
     },
     imageUrl: {
       type: String,
-      required: [true, "Image is required"],
+      // required: [true, "Image is required"],
     },
   },
   { timestamps: true }

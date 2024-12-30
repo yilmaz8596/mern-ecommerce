@@ -8,7 +8,7 @@ import { persist } from "zustand/middleware";
 interface UserStoreState {
   user: User | null;
   loading: boolean;
-  checkingAuth: boolean;
+  checkingAuth: () => Promise<boolean | undefined>;
   setUser: (user: User | null) => void;
   login: ({ email, password }: LoginProps) => Promise<boolean | undefined>;
   signup: ({
@@ -22,10 +22,9 @@ interface UserStoreState {
 
 export const useUserStore = create<UserStoreState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       user: null,
       loading: false,
-      checkingAuth: true,
       setUser: (user) => set({ user }),
       login: async ({ email, password }: LoginProps) => {
         set({ loading: true });
@@ -75,6 +74,18 @@ export const useUserStore = create<UserStoreState>()(
           toast.success("Logged out successfully");
         } catch (error: string | any) {
           toast.error(error.response.data.message || "An error occurred");
+        }
+      },
+      checkingAuth: async () => {
+        try {
+          const { data } = await axiosInstance.get("/auth/profile");
+          if (data.user) {
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          return false;
         }
       },
     }),
