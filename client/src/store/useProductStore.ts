@@ -11,6 +11,8 @@ interface ProductStoreState {
   createProduct: (product: Product) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
   toggleFeaturedProduct: (id: string) => Promise<void>;
+  fetchProductsByCategory: (category: string) => Promise<void>;
+  fetchRecommendedProducts: () => Promise<void>;
 }
 
 export const useProductStore = create<ProductStoreState>()(
@@ -70,6 +72,28 @@ export const useProductStore = create<ProductStoreState>()(
             loading: false,
           }));
           toast.success("Product updated successfully");
+        } catch {
+          set({ loading: false });
+          toast.error("An error occurred");
+        }
+      },
+      fetchProductsByCategory: async (category: string) => {
+        set({ loading: true });
+        try {
+          const { data } = await axiosInstance.get(
+            `/product/category/${category}`
+          );
+          set({ products: data.products, loading: false });
+        } catch {
+          set({ loading: false });
+          toast.error("An error occurred");
+        }
+      },
+      fetchRecommendedProducts: async () => {
+        set({ loading: true });
+        try {
+          const { data } = await axiosInstance.get("/product/recommended");
+          set({ products: data.products, loading: false });
         } catch {
           set({ loading: false });
           toast.error("An error occurred");

@@ -2,11 +2,10 @@ import { useUserStore } from "../store/useUserStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CategoryItem from "../components/CategoryItem";
-import FeaturedProducts from "../components/FeaturedProducts";
 
 const categories = [
   { href: "/jeans", name: "Jeans", imageUrl: "/jeans.jpg" },
-  { href: "/t-shirts", name: "T-shirts", imageUrl: "/tshirts.jpg" },
+  { href: "/t-shirt", name: "T-shirts", imageUrl: "/tshirts.jpg" },
   { href: "/shoes", name: "Shoes", imageUrl: "/shoes.jpg" },
   { href: "/glasses", name: "Glasses", imageUrl: "/glasses.png" },
   { href: "/jackets", name: "Jackets", imageUrl: "/jackets.jpg" },

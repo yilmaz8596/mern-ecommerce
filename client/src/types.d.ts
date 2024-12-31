@@ -34,3 +34,9 @@ export interface Product {
   countInStock?: number;
   isFeatured?: boolean;
 }
+
+export interface Cart extends Product {
+  _id?: string;
+  product: Product;
+  quantity: number;
+}

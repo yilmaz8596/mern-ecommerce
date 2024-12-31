@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import AdminDashboard from "./pages/AdminDashboard";
+import CategoryPage from "./pages/CategoryPage";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 
@@ -27,6 +28,7 @@ export default function App() {
             path="/secret-dashboard"
             element={user?.role === "admin" ? <AdminDashboard /> : <Home />}
           />
+          <Route path="/category/:category" element={<CategoryPage />} />
         </Routes>
       </div>
     </div>
