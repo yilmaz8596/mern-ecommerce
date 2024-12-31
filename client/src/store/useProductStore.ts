@@ -9,8 +9,8 @@ interface ProductStoreState {
   loading: boolean;
   fetchAllProducts: () => Promise<void>;
   createProduct: (product: Product) => Promise<void>;
-  deleteProduct: (id: number) => Promise<void>;
-  toggleFeaturedProduct: (id: number) => Promise<void>;
+  deleteProduct: (id: string) => Promise<void>;
+  toggleFeaturedProduct: (id: string) => Promise<void>;
 }
 
 export const useProductStore = create<ProductStoreState>()(
@@ -44,28 +44,28 @@ export const useProductStore = create<ProductStoreState>()(
           throw error;
         }
       },
-      deleteProduct: async (id: number) => {
+      deleteProduct: async (id: string) => {
+        // Change parameter type to string
         set({ loading: true });
         try {
           await axiosInstance.delete(`/product/${id}`);
           set((state) => ({
-            products: state.products.filter((p) => p.id !== id),
+            products: state.products.filter((p) => p._id !== id),
             loading: false,
           }));
           toast.success("Product deleted successfully");
+        } catch (error: any) {
           set({ loading: false });
-        } catch {
-          set({ loading: false });
-          toast.error("An error occurred");
+          toast.error(error.response?.data?.message || "An error occurred");
         }
       },
-      toggleFeaturedProduct: async (id: number) => {
+      toggleFeaturedProduct: async (id: string) => {
         set({ loading: true });
         try {
           await axiosInstance.patch(`/product/${id}`);
           set((state) => ({
             products: state.products.map((p) =>
-              p.id === id ? { ...p, featured: !p.isFeatured } : p
+              p._id === id ? { ...p, featured: !p.isFeatured } : p
             ),
             loading: false,
           }));
