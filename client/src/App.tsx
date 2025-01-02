@@ -1,10 +1,11 @@
 import { useUserStore } from "./store/useUserStore";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import AdminDashboard from "./pages/AdminDashboard";
 import CategoryPage from "./pages/CategoryPage";
+import CartPage from "./pages/CartPage";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 
@@ -29,6 +30,10 @@ export default function App() {
             element={user?.role === "admin" ? <AdminDashboard /> : <Home />}
           />
           <Route path="/category/:category" element={<CategoryPage />} />
+          <Route
+            path="/cart"
+            element={user ? <CartPage /> : <Navigate to="/signin" />}
+          />
         </Routes>
       </div>
     </div>

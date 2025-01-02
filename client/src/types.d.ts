@@ -28,7 +28,7 @@ export interface Product {
   _id?: string;
   name: string;
   description: string;
-  price: string;
+  price: number;
   imageUrl: string;
   category: string;
   countInStock?: number;
@@ -37,6 +37,19 @@ export interface Product {
 
 export interface Cart extends Product {
   _id?: string;
-  product: Product;
-  quantity: number;
+  product?: Product;
+  quantity?: number;
+  imageUrl?: string;
+  price?: number;
+  description?: string;
+}
+
+export interface Coupon {
+  _id?: string;
+  code?: string;
+  discountPercentage: number;
+  expiryDate?: string;
+  isActive?: boolean;
+  createdAt?: string;
+  userId?: string;
 }

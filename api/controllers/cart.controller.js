@@ -1,5 +1,6 @@
 import createHttpError from "http-errors";
 import Product from "../models/product.model.js";
+import User from "../models/user.model.js";
 
 export const addItemToCart = async (req, res, next) => {
   try {
@@ -16,7 +17,7 @@ export const addItemToCart = async (req, res, next) => {
     }
 
     await user.save();
-    res.json({
+    res.status(200).json({
       message: "Item added to cart",
       cartItems: {
         cartItems: user.cartItems,
@@ -36,8 +37,12 @@ export const removeAllItemsFromCart = async (req, res, next) => {
     } else {
       user.cartItems = [];
     }
+    await user.save();
+    res.json({
+      cartItems: user.cartItems,
+    });
   } catch (error) {
-    next(createHttpError(500, "Internal Server Error"));
+    next(createHttpError(500, error.message));
   }
 };
 
