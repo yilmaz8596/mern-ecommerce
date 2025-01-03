@@ -20,6 +20,7 @@ interface CartStore {
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   removeAllFromCart: () => void;
+  clearCart: () => void;
 }
 
 export const useCartStore = create(
@@ -147,6 +148,15 @@ export const useCartStore = create(
           console.log("error removing all from cart", error);
           toast.error("An error occurred");
         }
+      },
+      clearCart: () => {
+        set({
+          cart: [],
+          coupon: null,
+          total: 0,
+          subtotal: 0,
+          isCouponApplied: false,
+        });
       },
     }),
     {

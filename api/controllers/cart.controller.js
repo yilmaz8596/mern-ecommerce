@@ -1,6 +1,5 @@
 import createHttpError from "http-errors";
 import Product from "../models/product.model.js";
-import User from "../models/user.model.js";
 
 export const addItemToCart = async (req, res, next) => {
   try {

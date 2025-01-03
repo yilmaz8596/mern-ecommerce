@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import AdminDashboard from "./pages/AdminDashboard";
+import PurchaseSuccess from "./pages/PurchaseSuccess";
+import PurchaseCancel from "./pages/PurchaseCancel";
 import CategoryPage from "./pages/CategoryPage";
 import CartPage from "./pages/CartPage";
 import Navbar from "./components/Navbar";
@@ -34,6 +36,8 @@ export default function App() {
             path="/cart"
             element={user ? <CartPage /> : <Navigate to="/signin" />}
           />
+          <Route path="/purchase-success" element={<PurchaseSuccess />} />
+          <Route path="/purchase-cancel" element={<PurchaseCancel />} />
         </Routes>
       </div>
     </div>

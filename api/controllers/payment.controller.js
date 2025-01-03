@@ -6,7 +6,7 @@ import { stripe } from "../lib/stripe.js";
 export const createCheckoutSession = async (req, res, next) => {
   try {
     const { products, couponCode } = req.body;
-    if (!Array.isArray || products.length === 0) {
+    if (!Array.isArray(products) || products.length === 0) {
       return next(createHttpError(400, "Products are required"));
     }
 
@@ -19,10 +19,11 @@ export const createCheckoutSession = async (req, res, next) => {
           currency: "usd",
           product_data: {
             name: product.name,
-            images: [product.image],
+            images: [product.imageUrl],
           },
           unit_amount: amount,
         },
+        quantity: product.quantity || 1,
       };
     });
     let coupon = null;
@@ -68,7 +69,7 @@ export const createCheckoutSession = async (req, res, next) => {
     }
     res.status(200).json({ id: session.id, totalAmount: totalAmount / 100 });
   } catch (error) {
-    next(createHttpError(500, "Error creating checkout session"));
+    next(createHttpError(500, error.message));
   }
 };
 
@@ -77,13 +78,13 @@ async function createNewCoupon(userId) {
     const newCoupon = new Coupon({
       code: "GIFT" + Math.random().toString(36).substring(2, 8).toUpperCase(),
       discountPercentage: 10,
-      expirationDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      expiryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       userId,
     });
     await newCoupon.save();
     return newCoupon;
   } catch (error) {
-    throw createHttpError(500, "Error creating coupon");
+    throw createHttpError(500, error.message);
   }
 }
 
@@ -128,18 +129,16 @@ export const checkoutSuccess = async (req, res, next) => {
         paymentIntent: session.payment_intent,
         stripeSessionId: sessionId,
       });
-      await order.save();
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Payment successful",
-          orderId: newOrder._id,
-        });
+      await newOrder.save();
+      res.status(200).json({
+        success: true,
+        message: "Payment successful",
+        orderId: newOrder._id,
+      });
     } else {
       res.status(400).json({ message: "Payment failed" });
     }
   } catch (error) {
-    next(createHttpError(500, "Error completing checkout"));
+    next(createHttpError(500, error.message));
   }
 };
