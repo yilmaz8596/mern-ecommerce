@@ -3,7 +3,10 @@ import Coupon from "../models/coupon.model.js";
 
 export const getCoupon = async (req, res, next) => {
   try {
-    const coupon = await Coupon.findOne({ user: req.user._id, isActive: true });
+    const coupon = await Coupon.findOne({
+      user: req.user.userId,
+      isActive: true,
+    });
     if (!coupon) {
       return res.status(404).json({ message: "Coupon not found" });
     }

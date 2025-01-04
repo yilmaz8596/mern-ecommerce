@@ -15,13 +15,15 @@ const GiftCouponCard = () => {
     if (coupon && coupon.code) setUserInputCode(coupon.code);
   }, [coupon]);
 
+  console.log(coupon);
+
   const handleApplyCoupon = () => {
     if (!userInputCode) return;
     applyCoupon(userInputCode);
   };
 
-  const handleRemoveCoupon = async () => {
-    await removeCoupon();
+  const handleRemoveCoupon = () => {
+    removeCoupon();
     setUserInputCode("");
   };
 

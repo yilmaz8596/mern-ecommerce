@@ -34,7 +34,7 @@ export const useCartStore = create(
       isCouponApplied: false,
       getMyCoupon: async () => {
         try {
-          const response = await axiosInstance.get("/coupons");
+          const response = await axiosInstance.get("/coupon");
           set({ coupon: response.data });
         } catch (error) {
           console.error("Error fetching coupon:", error);
@@ -42,7 +42,7 @@ export const useCartStore = create(
       },
       applyCoupon: async (code: string) => {
         try {
-          const response = await axiosInstance.post("/coupons/validate", {
+          const response = await axiosInstance.post("/coupon/validate", {
             code,
           });
           set({ coupon: response.data, isCouponApplied: true });
@@ -82,9 +82,9 @@ export const useCartStore = create(
             }
           });
           get().calculateTotal();
-        } catch (error) {
+        } catch (error: string | any) {
           console.log("error adding to cart", error);
-          toast.error("An error occurred");
+          toast.error("An error occurred", error.response?.data?.message);
         }
       },
       getCartItems: async () => {
@@ -109,7 +109,7 @@ export const useCartStore = create(
           get().calculateTotal();
         } catch (error: string | any) {
           console.log("error removing from cart", error);
-          toast.error("An error occurred", error);
+          toast.error("An error occurred", error.response?.data?.message);
         }
       },
       updateQuantity: async (productId, quantity) => {
@@ -144,9 +144,9 @@ export const useCartStore = create(
           await axiosInstance.delete("/cart");
           set({ cart: [] });
           get().calculateTotal();
-        } catch (error) {
+        } catch (error: string | any) {
           console.log("error removing all from cart", error);
-          toast.error("An error occurred");
+          toast.error("An error occurred", error.response?.data?.message);
         }
       },
       clearCart: () => {
