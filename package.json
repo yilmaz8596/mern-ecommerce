@@ -5,7 +5,8 @@
   "main": "api/server.js",
   "scripts": {
     "dev": "nodemon api/server.js",
-    "start": "node api/server.js"
+    "start": "node api/server.js",
+    "seed": "node api/scripts/seedProducts.js"
   },
   "author": "",
   "type": "module",

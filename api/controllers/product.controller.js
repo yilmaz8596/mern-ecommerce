@@ -125,13 +125,33 @@ export const getRecommendedProducts = async (req, res, next) => {
 export const getProductsByCategory = async (req, res, next) => {
   try {
     const { category } = req.params;
-    const products = await Product.find({ category });
+
+    // Debug için
+    console.log("Requested category:", category);
+
+    const products = await Product.find({
+      category: {
+        $regex: new RegExp(category, "i"), // 'i' flag'i case-insensitive arama sağlar
+      },
+    });
+
+    // Debug için
+    console.log("Found products:", products);
+
+    if (!products.length) {
+      return res.status(404).json({
+        success: false,
+        message: "No products found in this category",
+      });
+    }
+
     res.status(200).json({
+      success: true,
       products,
     });
   } catch (error) {
-    console.log(error);
-    next(new createHttpError.InternalServerError());
+    console.error("Category fetch error:", error);
+    next(createHttpError(500, "Error fetching products by category"));
   }
 };
 

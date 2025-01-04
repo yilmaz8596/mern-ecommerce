@@ -1,7 +1,9 @@
 import { useUserStore } from "../store/useUserStore";
+import { useProductStore } from "../store/useProductStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CategoryItem from "../components/CategoryItem";
+import FeaturedProducts from "../components/FeaturedProducts";
 
 const categories = [
   { href: "/jeans", name: "Jeans", imageUrl: "/jeans.jpg" },
@@ -17,13 +19,17 @@ export default function Home() {
   const { user } = useUserStore();
   const navigate = useNavigate();
 
-  console.log(user);
+  const { fetchFeaturedProducts, products, loading } = useProductStore();
 
   useEffect(() => {
     if (!user) {
       navigate("/signin");
     }
   }, [user, navigate]);
+
+  useEffect(() => {
+    fetchFeaturedProducts();
+  }, [fetchFeaturedProducts]);
   return (
     <div className="relative min-h-screen text-white overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -40,9 +46,9 @@ export default function Home() {
           ))}
         </div>
 
-        {/* {!isLoading && products.length > 0 && (
+        {!loading && products?.length > 0 && (
           <FeaturedProducts featuredProducts={products} />
-        )} */}
+        )}
       </div>
     </div>
   );
