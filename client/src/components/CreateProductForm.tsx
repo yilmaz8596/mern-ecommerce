@@ -31,7 +31,7 @@ const CreateProductForm = () => {
       setNewProduct({
         name: "",
         description: "",
-        price: "",
+        price: 0,
         category: "",
         imageUrl: "",
       });
