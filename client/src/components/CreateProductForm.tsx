@@ -17,7 +17,7 @@ const CreateProductForm = () => {
   const [newProduct, setNewProduct] = useState({
     name: "",
     description: "",
-    price: "",
+    price: 0,
     category: "",
     imageUrl: "",
   });
@@ -125,7 +125,10 @@ const CreateProductForm = () => {
             name="price"
             value={newProduct.price}
             onChange={(e) =>
-              setNewProduct({ ...newProduct, price: e.target.value })
+              setNewProduct({
+                ...newProduct,
+                price: parseFloat(e.target.value),
+              })
             }
             step="0.01"
             className="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm 

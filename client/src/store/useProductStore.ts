@@ -33,7 +33,7 @@ export const useProductStore = create<ProductStoreState>()(
       createProduct: async (product: Product) => {
         set({ loading: true });
         try {
-          const response = await axiosInstance.post("/product", {
+          await axiosInstance.post("/product", {
             ...product,
             price: Number(product.price),
           });
