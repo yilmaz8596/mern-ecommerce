@@ -101,10 +101,17 @@ export const useCartStore = create(
       getCartItems: async () => {
         try {
           const { data } = await axiosInstance.get("/cart");
-          set({ cart: data.cart });
+          set({
+            cart: data.cart || [], // Ensure cart is always an array
+            loading: false,
+          });
           get().calculateTotal();
         } catch (error) {
-          console.log("error getting cart items", error);
+          console.error("Error getting cart items", error);
+          set({
+            cart: [],
+            loading: false,
+          });
         }
       },
       removeFromCart: async (productId) => {
