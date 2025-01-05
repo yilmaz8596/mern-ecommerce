@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import axios from "../lib/axios";
 import toast from "react-hot-toast";
-import LoadingSpinner from "./LoadingSpinner";
 import { Product } from "../types";
 
 const PeopleAlsoBought = () => {
   const [recommendations, setRecommendations] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -19,8 +17,6 @@ const PeopleAlsoBought = () => {
           error.response.data.message ||
             "An error occurred while fetching recommendations"
         );
-      } finally {
-        setIsLoading(false);
       }
     };
 
