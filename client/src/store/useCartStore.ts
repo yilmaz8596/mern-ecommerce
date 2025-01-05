@@ -5,7 +5,7 @@ import { Cart, Coupon } from "../types";
 import { toast } from "react-hot-toast";
 
 interface CartStore {
-  cart: Cart[] | null;
+  cart: Cart[];
   coupon: Coupon | null;
   total: number;
   subtotal: number;
