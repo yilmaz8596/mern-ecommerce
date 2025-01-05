@@ -11,6 +11,7 @@ const CartPage = () => {
   const { cart } = useCartStore();
 
   const cartItems = Array.isArray(cart) ? cart : [];
+  console.log(cartItems);
 
   return (
     <div className="py-8 md:py-16">
