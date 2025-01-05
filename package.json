@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon api/server.js",
     "start": "node api/server.js",
-    "seed": "node api/scripts/seedProducts.js"
+    "seed": "node api/scripts/seedProducts.js",
+    "build": "npm install && npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
   "type": "module",
