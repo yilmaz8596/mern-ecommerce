@@ -53,3 +53,5 @@ export interface Coupon {
   createdAt?: string;
   userId?: string;
 }
+
+declare module "@fontsource/creepster";

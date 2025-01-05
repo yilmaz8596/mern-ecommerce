@@ -11,9 +11,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/creepster": "^5.1.1",
     "@stripe/stripe-js": "^5.4.0",
     "@types/yup": "^0.32.0",
     "axios": "^1.7.9",
+    "copyfiles": "^2.4.1",
     "formik": "^2.4.6",
     "framer-motion": "^11.15.0",
     "lucide-react": "^0.469.0",
